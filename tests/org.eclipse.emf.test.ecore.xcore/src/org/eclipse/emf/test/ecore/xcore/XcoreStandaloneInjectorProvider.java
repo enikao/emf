@@ -16,6 +16,6 @@ public class XcoreStandaloneInjectorProvider extends XcoreInjectorProvider
   @Override
   protected XcoreRuntimeModule createRuntimeModule()
   {
-    return new XcoreStandaloneSetup.XcoreStandaloneRuntimeModule();
+    return new XcoreStandaloneSetup.XcoreStandaloneRuntimeModule() {};
   }
 }

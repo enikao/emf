@@ -5,7 +5,7 @@
       version="2.13.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.license"
-      license-feature-version="2.8.0.qualifier">
+      license-feature-version="2.9.0.qualifier">
 
    <description>
       %description
@@ -27,10 +27,6 @@ http://www.eclipse.org/legal/epl-v10.html
       <update label="%ModelingUpdateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
       <discovery label="%ModelingUpdateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
-
-   <includes
-         id="org.eclipse.emf.examples.source"
-         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.examples"

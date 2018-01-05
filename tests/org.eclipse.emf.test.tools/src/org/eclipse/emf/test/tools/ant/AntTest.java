@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IWorkspace;
@@ -105,6 +106,7 @@ public class AntTest
 //    return ts;
 //  }
 
+  @SuppressWarnings("unchecked")
   @BeforeClass
   public static void suiteSetUp() throws Exception
   {
@@ -216,6 +218,13 @@ public class AntTest
     moveFile(new File(sourceDirectory, "Writer.java5.txt"), new File(sourceDirectory, "Writer.java"));
 
     AntUtil.copyFiles(libraryDir, new File(EXAMPLES_COPY_DIR, "/library.java.1.4_5.0"), true);
+
+    @SuppressWarnings("rawtypes")
+    Hashtable options = JavaCore.getOptions();
+    options.put(JavaCore.COMPILER_COMPLIANCE, "1.5");
+    options.put(JavaCore.COMPILER_SOURCE, "1.5");
+    options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, "1.5");
+    JavaCore.setOptions(options);
   }
 
   protected static void moveFile(File source, File target)

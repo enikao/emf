@@ -157,6 +157,62 @@
         name="EMF Target Platform"
         activeRepositoryList="${eclipse.target.platform}"
         includeBinaryEquivalents="false">
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/PomArtifactUpdater">
+        <detail
+            key="skipArtifactIDs">
+          <value>false</value>
+        </detail>
+        <detail
+            key="skipVersions">
+          <value>false</value>
+        </detail>
+      </annotation>
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/PomModulesUpdaterX">
+        <detail
+            key="location">
+          <value>${emf.git.clone.location/releng/org.eclipse.emf.parent/plugins/pom.xml}</value>
+        </detail>
+        <detail
+            key="moduleRoots">
+          <value>${emf.git.clone.location/plugins}</value>
+        </detail>
+      </annotation>
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/PomModulesUpdaterX">
+        <detail
+            key="location">
+          <value>${emf.git.clone.location/releng/org.eclipse.emf.parent/features/pom.xml}</value>
+        </detail>
+        <detail
+            key="moduleRoots">
+          <value>${emf.git.clone.location/features}</value>
+        </detail>
+      </annotation>
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGeneratorX">
+        <detail
+            key="location">
+          <value>${emf.git.clone.location/releng/org.eclipse.emf.parent/tp/org.eclipse.emf.tp.target}</value>
+        </detail>
+        <detail
+            key="extraUnits">
+          <value>org.eclipse.equinox.executable.feature.group</value>
+        </detail>
+        <detail
+            key="singleLocation">
+          <value>true</value>
+        </detail>
+        <detail
+            key="includeAllPlatforms">
+          <value>false</value>
+        </detail>
+        <detail
+            key="includeSource">
+          <value>true</value>
+        </detail>
+      </annotation>
       <requirement
           name="org.eclipse.platform.feature.group"/>
       <requirement
@@ -261,19 +317,15 @@
       <repositoryList
           name="Juno">
         <repository
-            url="http://download.eclipse.org/releases/juno"/>
+            url="http://download.eclipse.org/releases/juno/201303010900"/>
         <repository
             url="http://download.itemis.com/updates/releases/2.1.0"/>
         <repository
-            url="http://download.eclipse.org/rt/rap/nightly/runtime"/>
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-R"/>
         <repository
             url="${gwt.tool.url}"/>
         <repository
             url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases"/>
-        <repository
-            url="http://download.eclipse.org/technology/m2e/releases/1.0"/>
-        <repository
-            url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
       </repositoryList>
       <repositoryList
           name="Indigo">
@@ -295,19 +347,15 @@
       <repositoryList
           name="Helios">
         <repository
-            url="http://download.eclipse.org/releases/helios"/>
+            url="http://download.eclipse.org/releases/helios/201102250900"/>
         <repository
             url="http://download.itemis.com/updates/releases/2.1.0"/>
         <repository
-            url="http://download.eclipse.org/rt/rap/nightly/runtime"/>
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-R"/>
         <repository
             url="${gwt.tool.url}"/>
         <repository
             url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases"/>
-        <repository
-            url="http://download.eclipse.org/technology/m2e/releases/1.0"/>
-        <repository
-            url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
       </repositoryList>
       <repositoryList
           name="Galileo">
@@ -332,6 +380,10 @@
       </repositoryList>
     </targlet>
   </setupTask>
+  <setupTask
+      xsi:type="setup:StringSubstitutionTask"
+      name="emf.git.clone.location"
+      value="${emf.git.clone.location}"/>
   <project name="core"
       label="Core">
     <setupTask
@@ -352,6 +404,10 @@
           rootFolder="${emf.git.clone.location/releng/org.eclipse.emf.releng}"/>
       <sourceLocator
           rootFolder="${emf.git.clone.location/releng/org.eclipse.emf.releng.buckminster}"/>
+      <sourceLocator
+          rootFolder="${emf.git.clone.location/releng/org.eclipse.emf.site}"/>
+      <sourceLocator
+          rootFolder="${emf.git.clone.location/releng/org.eclipse.emf.parent}"/>
     </setupTask>
     <setupTask
         xsi:type="setup.targlets:TargletTask">
@@ -434,9 +490,6 @@
               xsi:type="predicates:OrPredicate">
             <operand
                 xsi:type="predicates:NamePredicate"
-                pattern="org\.eclipse\.emf\.cheatsheets.*"/>
-            <operand
-                xsi:type="predicates:NamePredicate"
                 pattern="org\.eclipse\.emf\.example.*"/>
             <operand
                 xsi:type="predicates:NamePredicate"
@@ -462,7 +515,7 @@
               nature="org.eclipse.pde.PluginNature"/>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.emf\.doc"/>
+              pattern="org\.eclipse\.emf\.doc|org\.eclipse\.emf\.cheatsheets"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -498,7 +551,7 @@
               project="org.eclipse.emf"/>
           <operand
               xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.emf\.releng.*"/>
+              pattern="org\.eclipse\.emf\.releng.*|org\.eclipse\.emf\.parent|org\.eclipse\.emf\.site"/>
         </predicate>
       </workingSet>
       <workingSet
@@ -534,6 +587,26 @@
     </setupTask>
     <stream
         name="master">
+      <setupTask
+          xsi:type="setup:EclipseIniTask"
+          option="-Doomph.redirection.emf.setup"
+          value="=http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/releng/org.eclipse.emf.releng/EMF.setup->${emf.git.clone.location|uri}/releng/org.eclipse.emf.releng/EMF.setup"
+          vm="true"/>
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="eclipse.target.platform"
+          defaultValue="Photon"
+          storageURI="scope://Workspace"/>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.13"/>
+        <repository
+            url="http://download.eclipse.org/ecoretools/updates"/>
+      </setupTask>
+    </stream>
+    <stream
+        name="tycho-migration">
       <setupTask
           xsi:type="setup:EclipseIniTask"
           option="-Doomph.redirection.emf.setup"
@@ -720,6 +793,23 @@
       </setupTask>
     </stream>
     <stream
+        name="tycho-migration">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="eclipse.target.platform"
+          defaultValue="Photon"
+          storageURI="scope://Workspace"/>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.13"/>
+        <repository
+            url="http://download.eclipse.org/ecoretools/updates"/>
+        <repository
+            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases"/>
+      </setupTask>
+    </stream>
+    <stream
         name="R2_11_maintenance"
         label="2.11">
       <setupTask
@@ -844,6 +934,21 @@
       </setupTask>
     </stream>
     <stream
+        name="tycho-migration">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="eclipse.target.platform"
+          defaultValue="Photon"
+          storageURI="scope://Workspace"/>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.13"/>
+        <repository
+            url="http://download.eclipse.org/ecoretools/updates"/>
+      </setupTask>
+    </stream>
+    <stream
         name="R2_11_maintenance"
         label="2.11">
       <setupTask
@@ -934,6 +1039,19 @@
     </setupTask>
     <stream
         name="master">
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="eclipse.target.platform"
+          defaultValue="Photon"
+          storageURI="scope://Workspace"/>
+      <setupTask
+          xsi:type="setup.p2:P2Task">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.13"/>
+      </setupTask>
+    </stream>
+    <stream
+        name="tycho-migration">
       <setupTask
           xsi:type="setup:VariableTask"
           name="eclipse.target.platform"

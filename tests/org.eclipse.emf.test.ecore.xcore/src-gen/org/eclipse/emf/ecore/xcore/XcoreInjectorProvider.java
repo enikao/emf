@@ -5,6 +5,11 @@ package org.eclipse.emf.ecore.xcore;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.xtext.testing.GlobalRegistries;
 import org.eclipse.xtext.testing.GlobalRegistries.GlobalStateMemento;
 import org.eclipse.xtext.testing.IInjectorProvider;
@@ -17,6 +22,12 @@ public class XcoreInjectorProvider implements IInjectorProvider, IRegistryConfig
 	protected Injector injector;
 
 	static {
+		System.setProperty("org.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin", "true");
+		EcorePackage.eINSTANCE.eClass();
+		XMLTypePackage.eINSTANCE.eClass();
+		XMLNamespacePackage.eINSTANCE.eClass();
+		GenModelPackage.eINSTANCE.eClass();
+
 		GlobalRegistries.initializeDefaults();
 	}
 
