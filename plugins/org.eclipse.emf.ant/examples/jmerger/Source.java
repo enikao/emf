@@ -56,9 +56,6 @@ public class MergerExample
    */
   protected int a5 = 5;
 
-
-
-
   /**
    * Source javadoc 11
    * <!-- begin-user-doc -->
@@ -75,7 +72,7 @@ public class MergerExample
    */
   protected boolean newAttribute = true;
 
-  /**
+/**
    * Source javadoc 13
    * <!-- begin-user-doc -->
    * Source user javadoc 14

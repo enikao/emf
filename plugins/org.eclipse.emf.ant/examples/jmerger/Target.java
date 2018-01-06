@@ -63,10 +63,6 @@ public class MergerExample
    */
   private int a5 = -5;
 
-
-
-
-
   /**
    * Target javadoc 12
    * <!-- begin-user-doc -->
