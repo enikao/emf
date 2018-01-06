@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.core.runtime.Platform;
@@ -173,7 +174,6 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
       {
         if (paths == null)
         {
-          System.err.println("Getting classpath entries:" + EMFPlugin.IS_ECLIPSE_RUNNING); // DELETE-ME
           if (EMFPlugin.IS_ECLIPSE_RUNNING)
           {
             Bundle xcoreBundle = Platform.getBundle("org.eclipse.emf.ecore.xcore");
@@ -190,7 +190,6 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
                   String authority = resolved.authority();
                   resolved = URI.createURI(authority.substring(0, authority.length() - 1));
                 }
-                System.err.println(" Entry:" + EMFPlugin.IS_ECLIPSE_RUNNING); // DELETE ME
                 if (resolved.isFile())
                 {
                   paths.add(resolved.toFileString());
@@ -221,7 +220,10 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
                    return fileExtensions.contains(uri.fileExtension());
                  }
                });
-           System.err.println(" pathToUriMap:" + pathToUriMap); // DELETE ME
+          for (Entry<String, URI> entry : pathToUriMap.entries())
+          {
+            System.err.println(" pathToUriMap:" + entry); // DELETE ME
+          }
         }
         return pathToUriMap;
       }

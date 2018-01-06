@@ -10,8 +10,10 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+import org.eclipse.xtext.common.types.TypesPackage;
 import org.eclipse.xtext.testing.GlobalRegistries;
 import org.eclipse.xtext.testing.GlobalRegistries.GlobalStateMemento;
+import org.eclipse.xtext.xbase.XbasePackage;
 import org.eclipse.xtext.testing.IInjectorProvider;
 import org.eclipse.xtext.testing.IRegistryConfigurator;
 
@@ -27,6 +29,9 @@ public class XcoreInjectorProvider implements IInjectorProvider, IRegistryConfig
 		XMLTypePackage.eINSTANCE.eClass();
 		XMLNamespacePackage.eINSTANCE.eClass();
 		GenModelPackage.eINSTANCE.eClass();
+		XcorePackage.eINSTANCE.eClass();
+		XbasePackage.eINSTANCE.eClass();
+		TypesPackage.eINSTANCE.eClass();
 
 		GlobalRegistries.initializeDefaults();
 	}
