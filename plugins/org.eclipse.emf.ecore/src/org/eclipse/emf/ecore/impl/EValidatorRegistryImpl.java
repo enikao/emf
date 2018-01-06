@@ -31,6 +31,7 @@ public class EValidatorRegistryImpl extends HashMap<EPackage, Object> implements
   public EValidatorRegistryImpl()
   {
     super();
+    Thread.dumpStack(); // DELETE-ME
   }
 
   public EValidatorRegistryImpl(EValidator.Registry delegateRegistry)

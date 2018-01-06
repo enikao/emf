@@ -173,6 +173,7 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
       {
         if (paths == null)
         {
+          System.err.println("Getting classpath entries:" + EMFPlugin.IS_ECLIPSE_RUNNING); // DELETE-ME
           if (EMFPlugin.IS_ECLIPSE_RUNNING)
           {
             Bundle xcoreBundle = Platform.getBundle("org.eclipse.emf.ecore.xcore");
@@ -189,6 +190,7 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
                   String authority = resolved.authority();
                   resolved = URI.createURI(authority.substring(0, authority.length() - 1));
                 }
+                System.err.println(" Entry:" + EMFPlugin.IS_ECLIPSE_RUNNING); // DELETE ME
                 if (resolved.isFile())
                 {
                   paths.add(resolved.toFileString());
@@ -219,6 +221,7 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
                    return fileExtensions.contains(uri.fileExtension());
                  }
                });
+           System.err.println(" pathToUriMap:" + pathToUriMap); // DELETE ME
         }
         return pathToUriMap;
       }
