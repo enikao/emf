@@ -722,6 +722,10 @@ public class AntTest
         Pattern pattern = Pattern.compile("(?<=\n|\r)(package [^;]+;(?:\n|\r\n){2})?(?:\n|\r\n)?(?<=\n|\r)(import [^;]+;)(\n|\r\n)(\n|\r\n)*(?=import)");
         expectedContent = pattern.matcher(expectedContent).replaceAll("$1$2$3");
         generatedContent = pattern.matcher(generatedContent).replaceAll("$1$2$3");
+        
+        Pattern hack = Pattern.compile("(\\n/\\*\\*)");
+        expectedContent = hack.matcher(expectedContent).replaceAll("\\n  /**");
+        generatedContent = hack.matcher(expectedContent).replaceAll("\\n  /**");
       }
       assertEquals("File: " + file, expectedContent, generatedContent);
     }

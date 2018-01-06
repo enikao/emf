@@ -81,7 +81,7 @@ public class MergerExample
    */
   protected boolean newAttribute = true;
 
-/**
+  /**
    * Source javadoc 13
    * <!-- begin-user-doc -->
    * Target user javadoc 16
