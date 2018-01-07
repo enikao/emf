@@ -183,9 +183,15 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
             // In the Jenkins build, the GenModel support appears not to be registered consistently.
             if (registry.getExtensionToFactoryMap().get("genmodel") == null)
             {
-              GenModelSupport genModelSupport = new GenModelSupport();
-              injector.injectMembers(genModelSupport);
-              genModelSupport.registerServices(false);
+              System.err.println("Force registration of GenModel support");
+              GenModelSupport genModelSupport =
+                 new GenModelSupport()
+                 {
+                   {
+                     injector.injectMembers(this);
+                     registerInRegistry(false);
+                   }
+                 };
               registry.getExtensionToFactoryMap().put("genmodel", genModelSupport);
             }
 
