@@ -217,9 +217,7 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
                  Set<String> fileExtensions = Sets.newHashSet("xcore", "genmodel", "ecore");
                  public boolean matches(URI uri)
                  {
-                   boolean result = fileExtensions.contains(uri.fileExtension());
-                   System.err.println("Scanning " + URI.createHierarchicalURI(uri.segments(), null, null) + " -> " + result);
-                   return result;
+                   return fileExtensions.contains(uri.fileExtension());
                  }
                });
           for (Entry<String, URI> entry : pathToUriMap.entries())
