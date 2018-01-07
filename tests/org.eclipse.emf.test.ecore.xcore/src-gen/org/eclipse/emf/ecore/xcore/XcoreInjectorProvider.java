@@ -3,38 +3,19 @@
  */
 package org.eclipse.emf.ecore.xcore;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-import org.eclipse.xtext.common.types.TypesPackage;
 import org.eclipse.xtext.testing.GlobalRegistries;
 import org.eclipse.xtext.testing.GlobalRegistries.GlobalStateMemento;
-import org.eclipse.xtext.xbase.XbasePackage;
 import org.eclipse.xtext.testing.IInjectorProvider;
 import org.eclipse.xtext.testing.IRegistryConfigurator;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class XcoreInjectorProvider implements IInjectorProvider, IRegistryConfigurator {
 
 	protected GlobalStateMemento stateBeforeInjectorCreation;
 	protected GlobalStateMemento stateAfterInjectorCreation;
 	protected Injector injector;
-
-	static {
-		System.setProperty("org.eclipse.emf.ecore.plugin.EcorePlugin.doNotLoadResourcesPlugin", "true");
-		EcorePackage.eINSTANCE.eClass();
-		XMLTypePackage.eINSTANCE.eClass();
-		XMLNamespacePackage.eINSTANCE.eClass();
-		GenModelPackage.eINSTANCE.eClass();
-		XcorePackage.eINSTANCE.eClass();
-		XbasePackage.eINSTANCE.eClass();
-		TypesPackage.eINSTANCE.eClass();
-
-		GlobalRegistries.initializeDefaults();
-	}
 
 	@Override
 	public Injector getInjector()

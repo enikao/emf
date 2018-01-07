@@ -12,7 +12,6 @@ package org.eclipse.emf.ecore.impl;
 
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
@@ -32,17 +31,6 @@ public class EValidatorRegistryImpl extends HashMap<EPackage, Object> implements
   public EValidatorRegistryImpl()
   {
     super();
-    Thread.dumpStack(); // DELETE-ME
-  }
-
-  // DELETE-ME
-  @Override
-  public void putAll(Map<? extends EPackage, ? extends Object> m)
-  {
-    for (java.util.Map.Entry<? extends EPackage, ? extends Object> entry : m.entrySet())
-    {
-      System.err.println("Validator:" + entry);
-    }
   }
 
   public EValidatorRegistryImpl(EValidator.Registry delegateRegistry)
