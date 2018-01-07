@@ -36,6 +36,7 @@ import org.eclipse.xtext.mwe.ContainersStateFactory;
 import org.eclipse.xtext.mwe.PathTraverser;
 import org.eclipse.xtext.mwe.RuntimeResourceSetInitializer;
 import org.eclipse.xtext.mwe.UriFilter;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.resource.containers.IAllContainersState;
 import org.eclipse.xtext.xbase.XbasePackage;
@@ -169,6 +170,9 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
       @Inject
       private ContainersStateFactory factory;
 
+      @Inject
+      private IResourceServiceProvider.Registry registry;
+
       @Override
       public List<String> getClassPathEntries()
       {
@@ -176,6 +180,15 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
         {
           if (EMFPlugin.IS_ECLIPSE_RUNNING)
           {
+            // In the Jenkins build, the GenModel support appears not to be registered consistently.
+            if (registry.getExtensionToFactoryMap().get("genmodel") == null)
+            {
+              GenModelSupport genModelSupport = new GenModelSupport();
+              injector.injectMembers(genModelSupport);
+              genModelSupport.registerServices(false);
+              registry.getExtensionToFactoryMap().put("genmodel", genModelSupport);
+            }
+
             Bundle xcoreBundle = Platform.getBundle("org.eclipse.emf.ecore.xcore");
             Bundle[] bundles = xcoreBundle.getBundleContext().getBundles();
             paths = Lists.newArrayList();
