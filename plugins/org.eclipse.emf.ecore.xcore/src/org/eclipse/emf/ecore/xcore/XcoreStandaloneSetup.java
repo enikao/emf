@@ -236,7 +236,26 @@ public class XcoreStandaloneSetup extends XcoreStandaloneSetupGenerated
                  Set<String> fileExtensions = Sets.newHashSet("xcore", "genmodel", "ecore");
                  public boolean matches(URI uri)
                  {
-                   return fileExtensions.contains(uri.fileExtension());
+                   boolean result = fileExtensions.contains(uri.fileExtension());
+                   if (result && registry.getResourceServiceProvider(uri) == null)
+                   {
+                     System.err.println("Force registration of GenModel support: " + uri);
+                     GenModelSupport genModelSupport =
+                        new GenModelSupport()
+                        {
+                          {
+                            injector.injectMembers(this);
+                            registerInRegistry(false);
+                          }
+                        };
+                     registry.getExtensionToFactoryMap().put("genmodel", genModelSupport);
+                     System.err.println("Force registration of GenModel support test: " + registry.getResourceServiceProvider(uri));
+                   }
+                   else if (result)
+                   {
+                     System.err.println(" Scanned: " + uri);
+                   }
+                   return result;
                  }
                });
           for (Entry<String, URI> entry : pathToUriMap.entries())
